@@ -1,0 +1,321 @@
+# highermind-code-skills
+
+**Antes de existir uma empresa, existiu uma mente que decidiu construir.**
+
+Cinco modos cognitivos para o [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Construído em cima da filosofia Higher Mind: empresas são extensões da arquitetura interna do fundador. Se o código é mediano, o padrão era mediano. Se o software é world-class, a mente por trás dele exigiu world-class.
+
+Isso não é um pack de prompts. É um padrão, codificado uma vez, pra você nunca mais ter que se repetir.
+
+---
+
+### O problema
+
+Toda vez que você abre o Claude Code, você começa do zero. O agente não sabe qual é a sua barra. Não sabe que "bom o suficiente" não é suficiente. Não sabe que você pensa em décadas, não em sprints. Então você se repete:
+
+- "Faz world-class."
+- "Checa segurança. Todas as camadas."
+- "O design precisa ser nível Apple."
+- "Roda testes. Cobre tudo."
+- "Isso é realmente a coisa certa pra construir?"
+
+Você fala as mesmas coisas, com palavras diferentes, toda vez. A qualidade do output depende de quão bem você traduz o seu padrão naquele momento específico.
+
+highermind-code-skills resolve isso. Você traduz o seu padrão uma vez. Depois ele está sempre lá.
+
+---
+
+### Como funciona
+
+Duas camadas:
+
+**CLAUDE.md** — sua identidade. Sempre ativo. Todo projeto, toda sessão. O agente sabe quem você é, qual é a sua barra, e que mediocridade não é opção. Você nunca mais precisa explicar isso.
+
+**Skills** — modos cognitivos que você ativa quando precisa. Cada um coloca o agente num mindset específico com um trabalho específico.
+
+| Skill | Quando | O que faz |
+| --- | --- | --- |
+| `/hm-init` | Início de projeto | Melhores ferramentas, melhor estrutura, melhores práticas. World-class desde o primeiro arquivo. |
+| `/hm-engineer` | Validar código | Arquitetura, segurança, performance, qualidade. Todas as camadas. Production-grade. |
+| `/hm-design` | Validar interface | Pra onde o software está indo, não pra onde ele esteve. Sofisticação, encantamento, beleza. |
+| `/hm-qa` | Testar tudo | Roda, quebra, verifica que funciona. Edge cases, fluxos, uso real. |
+| `/hm-align` | Validar produto | Isso é a coisa certa pra construir? Está alinhado com a visão? |
+
+---
+
+### O fluxo
+
+```
+/hm-init       você começa um projeto novo. ele nasce certo.
+[constrói]     você dirige, o agente executa.
+/hm-design     você valida se a interface está na barra.
+/hm-engineer   você valida se o código está na barra.
+/hm-qa         você verifica que realmente funciona.
+/hm-align      a qualquer momento: isso está alinhado com a visão?
+```
+
+Você não precisa usar os cinco toda vez. Use o que o momento pede. `/hm-align` pode vir primeiro, por último, ou no meio. `/hm-engineer` e `/hm-design` podem rodar várias vezes enquanto você itera.
+
+---
+
+### Demo
+
+```
+Você:  Preciso construir o fluxo de aplicação pra uma comunidade de founders.
+       Membros aplicam, são avaliados, aceitos ou colocados em waitlist.
+
+Você:  /hm-align
+
+Claude: O que a aplicação está filtrando? Se filtra por métricas
+        (receita, tamanho do time, tração), você está construindo um clube.
+        Se filtra por alinhamento com construção, você está construindo
+        uma comunidade. Qual das duas é essa?
+
+Você:  Alinhamento. O formulário precisa revelar como a pessoa pensa
+       sobre construir.
+
+Você:  /hm-init
+
+Claude: [Seleciona Next.js 15, Tailwind, Supabase, Resend pra emails.
+        Estrutura monorepo. Configura auth, schema do banco, rotas de API,
+        framework de testes. Tudo organizado, production-grade
+        desde o primeiro commit.]
+
+Você:  Constrói o fluxo de aplicação.
+
+Claude: [Implementa: formulário multi-step, fila de revisão, motor de
+        decisão, notificações por email, tracking de status, lógica
+        de reaplicação.]
+
+Você:  /hm-design
+
+Claude: O formulário usa layout padrão com cards e bordas cinza.
+        Isso é software de 2020. Problemas:
+        - Sem hierarquia visual. Toda pergunta tem o mesmo peso.
+        - Tipografia padrão. Sem intenção editorial.
+        - Fundo claro, sem dark mode.
+        - Parece um onboarding de SaaS, não um gateway.
+
+        Correção: uma pergunta por tela, interface dark, transições
+        cinematográficas, tipografia editorial. A aplicação deve parecer
+        uma experiência, não um formulário.
+
+Você:  /hm-engineer
+
+Claude: [CRÍTICO] Race condition: revisores concorrentes podem aceitar
+        o mesmo aplicante, disparando emails de boas-vindas duplicados.
+        Fix: optimistic locking no status de revisão.
+
+        [CRÍTICO] Sem rate limiting no endpoint de aplicação.
+        Fix: middleware de rate limiter, 3 submissões por email por dia.
+
+        [ALTO] Fila de revisão expõe emails dos aplicantes pra todos
+        os revisores sem controle de acesso por role.
+        Fix: mascarar emails, adicionar modelo de permissão por revisor.
+
+        Arquitetura sólida. Data flow limpo.
+        3 findings. Corrigir os críticos antes de shippar.
+
+Você:  [corrige tudo]
+
+Você:  /hm-qa
+
+Claude: [Roda suite de testes completa. Navega fluxo de aplicação end to end.
+        Testa: submissão, submissão duplicada, campos vazios, aceitar,
+        rejeitar, waitlist, reaplicação, revisões concorrentes,
+        entrega de email, viewport mobile.]
+
+        12/12 cenários passaram. Fluxo de aplicação funciona end to end.
+        Um issue menor: tela de sucesso não renderiza corretamente
+        em viewports abaixo de 375px. Não bloqueia.
+```
+
+---
+
+### Pra quem é isso
+
+Você constrói porque não consegue não construir. Você usa Claude Code como seu time de dev. Você sabe exatamente como é world-class, mas está cansado de traduzir esse padrão em palavras toda sessão.
+
+Isso codifica o seu padrão uma vez. O agente opera no seu nível desde o primeiro comando.
+
+---
+
+## `/hm-init`
+
+**Início de projeto.**
+
+Você abre um projeto novo. Digita `/hm-init` e descreve o que quer construir. O agente não faz só scaffold. Ele toma decisões:
+
+- O melhor framework pra esse tipo de projeto
+- O melhor banco de dados, ORM, solução de auth
+- A melhor estrutura de pastas e patterns de arquitetura
+- Setup de testes desde o dia um
+- Configuração de CI/CD
+- Gerenciamento de environments
+- Formatação e linting do código
+
+Cada escolha é justificada. Nada é padrão. Nada é "a gente geralmente usa isso." Cada ferramenta é a melhor ferramenta disponível pra esse projeto específico.
+
+O padrão: se um time de engenharia world-class olhasse pra esse projeto no dia um, diria "é assim que se começa um projeto."
+
+---
+
+## `/hm-engineer`
+
+**Validar código.**
+
+Você digita `/hm-engineer` e o agente audita tudo. Não é lint. Não é estilo. É estrutura.
+
+O que ele checa:
+
+- **Arquitetura**: responsabilidades estão separadas corretamente? Boundaries estão limpos?
+- **Segurança**: injection, auth bypass, secrets expostos, trust boundaries, CSRF, validação de dados
+- **Performance**: N+1 queries, indexes faltando, re-renders desnecessários, bundle size, caching
+- **Resiliência**: tratamento de erros, retry logic, failure modes, race conditions, integridade de dados
+- **Qualidade**: cobertura de testes, qualidade dos testes, naming, abstrações, saúde das dependências
+- **Escala**: vai aguentar em 10x? 100x? Onde estão os gargalos?
+
+O padrão: se você estivesse vendendo esse software e o comprador contratasse engenheiros pra auditar o codebase, eles não encontrariam nada pra reclamar.
+
+---
+
+## `/hm-design`
+
+**Validar interface.**
+
+Não é "faz bonito." É visão.
+
+O design de software está se movendo. O que parecia moderno em 2020 parece datado agora. O que parece moderno agora vai parecer datado em 2028. `/hm-design` não valida contra o padrão de hoje. Valida contra pra onde o software está indo.
+
+A barra:
+
+- **Sofisticação**: cada elemento tem uma razão pra existir. Nada decorativo. Nada de encher espaço.
+- **Diferenciação**: essa interface só poderia pertencer a esse produto. Não é um template com conteúdo trocado.
+- **Experiência**: usar esse software precisa parecer alguma coisa. Não neutro. Não invisível. Intencional.
+- **Encantamento**: momentos que fazem a pessoa pausar e pensar "isso é lindamente feito."
+- **Usabilidade**: sem esforço. O usuário nunca fica na dúvida do que fazer.
+- **Beleza**: baseado nos produtos mais belos que a humanidade construiu. Apple. Airbnb. Linear. Stripe. Vercel.
+
+O que é rejeitado:
+- Qualquer coisa que parece que foi construída de um template
+- Qualquer coisa que poderia pertencer a qualquer produto
+- Qualquer coisa que usa light mode sem considerar dark mode
+- Qualquer coisa com tipografia padrão, espaçamento padrão, tudo padrão
+- Qualquer coisa que prioriza "shippar rápido" em vez de "shippar certo"
+
+O padrão: mostre essa interface pra alguém com gosto. Não um designer. Alguém com gosto. Essa pessoa deve sentir que quem construiu isso se importa profundamente com o craft.
+
+---
+
+## `/hm-qa`
+
+**Testar tudo.**
+
+Código que não é testado não existe. `/hm-qa` roda tudo:
+
+- Testes unitários pra lógica de negócio
+- Testes de integração pra endpoints de API e fluxos de dados
+- Testes end-to-end pros fluxos críticos do usuário
+- Testes de edge case (estados vazios, valores limites, operações concorrentes)
+- Verificação em viewport mobile
+- Testes de estados de erro (o que o usuário vê quando as coisas falham?)
+- Testes de performance (tempos de carregamento, bundle sizes, tempos de resposta da API)
+- Acessibilidade básica (contraste, navegação por teclado, focus states)
+
+O agente não só roda testes. Ele pensa no que deveria ser testado e não está. Encontra os gaps.
+
+O padrão: você deployaria isso com confiança numa sexta à noite.
+
+---
+
+## `/hm-align`
+
+**Validar produto.**
+
+Antes de construir, durante, ou depois. A qualquer momento você pode digitar `/hm-align` e o agente sai do modo executor e entra no modo conselheiro.
+
+Ele pergunta:
+
+- **Isso é a coisa certa pra construir?** Serve a visão ou é uma distração?
+- **O timing é certo?** Deveria existir agora, ou outra coisa precisa vir primeiro?
+- **Pra quem é isso?** Pra visão do fundador, pra necessidade real do usuário, ou pra um requisito imaginário?
+- **Isso cria valor real?** Ou só dá a sensação de estar sendo produtivo?
+
+`/hm-align` é a skill Higher Mind. A que a maioria das ferramentas de IA nunca vai ter. Porque a maioria das ferramentas de IA otimiza pra "construa mais rápido." Essa pergunta: "você deveria construir isso?"
+
+---
+
+## Instalação
+
+**Requisitos:** [Claude Code](https://docs.anthropic.com/en/docs/claude-code), [Git](https://git-scm.com/).
+
+### Passo 1: Instalar as skills
+
+Abra o Claude Code e rode:
+
+```
+git clone https://github.com/rodrigohighermind/highermind-code-skills.git ~/.claude/skills/highermind-code-skills && cd ~/.claude/skills/highermind-code-skills && chmod +x setup && ./setup
+```
+
+### Passo 2: Configurar o CLAUDE.md
+
+Copie o template incluído pra `~/.claude/CLAUDE.md` e customize:
+
+```
+cp ~/.claude/skills/highermind-code-skills/CLAUDE.md.template ~/.claude/CLAUDE.md
+```
+
+Edite `~/.claude/CLAUDE.md` pra adicionar seu nome, seus projetos e suas especificidades.
+
+### O que é instalado
+
+- Arquivos de skill em `~/.claude/skills/highermind-code-skills/`
+- Symlinks em `~/.claude/skills/hm-init`, `~/.claude/skills/hm-engineer`, etc.
+- `CLAUDE.md.template` como ponto de partida pro seu arquivo de identidade global
+
+Tudo fica dentro de `~/.claude/`. Nada toca seu PATH ou roda em background.
+
+---
+
+## Adicionar a um projeto (opcional)
+
+Pra compartilhar as skills com o time num repo específico:
+
+```
+cp -Rf ~/.claude/skills/highermind-code-skills .claude/skills/highermind-code-skills && rm -rf .claude/skills/highermind-code-skills/.git && cd .claude/skills/highermind-code-skills && ./setup
+```
+
+---
+
+## Atualização
+
+```
+cd ~/.claude/skills/highermind-code-skills && git fetch origin && git reset --hard origin/main && chmod +x setup && ./setup
+```
+
+## Desinstalação
+
+```
+for s in hm-init hm-engineer hm-design hm-qa hm-align; do rm -f ~/.claude/skills/$s; done && rm -rf ~/.claude/skills/highermind-code-skills
+```
+
+---
+
+## Filosofia
+
+Construído em cima da filosofia [Higher Mind](https://highermind.com.br):
+
+**Primeiro o fundador. Depois a empresa. Depois o mundo.**
+
+O mesmo vale pro software. Primeiro o padrão. Depois o código. Depois o produto. Se o padrão é world-class, tudo que vem depois também será.
+
+Empresas são só o subproduto. Software é só o subproduto. O que importa é a mente que decidiu construir.
+
+---
+
+## Licença
+
+MIT
+
+---
+
+Criado por [Rodrigo Lopes](https://github.com/rodrigohighermind), fundador do [Higher Mind](https://highermind.com.br).

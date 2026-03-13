@@ -1,0 +1,40 @@
+#!/bin/bash
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SKILLS_DIR="$(dirname "$SCRIPT_DIR")"
+
+echo ""
+echo "  highermind-code-skills"
+echo "  ----------------------"
+echo ""
+
+for skill in hm-init hm-engineer hm-design hm-qa hm-align; do
+    target="$SKILLS_DIR/$skill"
+    if [ -L "$target" ] || [ -e "$target" ]; then
+        rm -rf "$target"
+    fi
+    ln -s "$SCRIPT_DIR/$skill" "$target"
+    echo "  /$skill instalado"
+done
+
+echo ""
+echo "  Skills instaladas. Comandos disponíveis:"
+echo ""
+echo "    /hm-init       Começar um novo projeto"
+echo "    /hm-engineer   Validar código"
+echo "    /hm-design     Validar interface"
+echo "    /hm-qa         Testar tudo"
+echo "    /hm-align      Checar alinhamento de produto"
+echo ""
+
+if [ ! -f "$HOME/.claude/CLAUDE.md" ]; then
+    echo "  Nota: Nenhum ~/.claude/CLAUDE.md encontrado."
+    echo "  Copie o template pra definir seu padrão global:"
+    echo ""
+    echo "    cp $SCRIPT_DIR/CLAUDE.md.template ~/.claude/CLAUDE.md"
+    echo ""
+fi
+
+echo "  Pronto."
+echo ""
