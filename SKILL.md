@@ -6,7 +6,7 @@ Quatro modos cognitivos de execução pro Claude Code, construídos na filosofia
 
 - `/hm-init` — Começar um novo projeto com as melhores ferramentas e estrutura
 - `/hm-engineer` — Validar código em todas as camadas (arquitetura, segurança, performance, qualidade)
-- `/hm-design` — Validar interface contra o mais alto padrão de design de software
+- `/hm-designer` — Validar interface contra o mais alto padrão de design de software
 - `/hm-qa` — Testar tudo, encontrar gaps, verificar que funciona
 
 Skills de direção estratégica (`/hm-align`, `/hm-sequoia`) estão em [highermind-business-skills](https://github.com/rodrigohighermind/highermind-business-skills).

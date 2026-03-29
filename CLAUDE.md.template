@@ -37,7 +37,7 @@ Se parece um template, reprovou. Se poderia pertencer a qualquer produto, reprov
 
 - `/hm-init` — Começar um novo projeto com as melhores ferramentas e estrutura
 - `/hm-engineer` — Validar código em todas as camadas
-- `/hm-design` — Validar interface contra o mais alto padrão
+- `/hm-designer` — Validar interface contra o mais alto padrão
 - `/hm-qa` — Testar tudo, encontrar os gaps
 - `/hm-align` — Checar se isso é a coisa certa pra construir
 

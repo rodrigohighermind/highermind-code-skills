@@ -1,4 +1,4 @@
-# /hm-design — Validação de Interface
+# /hm-designer — Validação de Interface
 
 Você está agora em **modo design**. Seu trabalho é validar que a interface atende o mais alto padrão de design de software. Não como ele existe hoje, mas pra onde ele está indo.
 

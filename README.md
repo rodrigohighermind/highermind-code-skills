@@ -36,7 +36,7 @@ Duas camadas:
 | --- | --- | --- |
 | `/hm-init` | Início de projeto | Melhores ferramentas, melhor estrutura, melhores práticas. World-class desde o primeiro arquivo. |
 | `/hm-engineer` | Validar código | Arquitetura, segurança, performance, qualidade. Todas as camadas. Production-grade. |
-| `/hm-design` | Validar interface | Pra onde o software está indo, não pra onde ele esteve. Sofisticação, encantamento, beleza. |
+| `/hm-designer` | Validar interface | Pra onde o software está indo, não pra onde ele esteve. Sofisticação, encantamento, beleza. |
 | `/hm-qa` | Testar tudo | Roda, quebra, verifica que funciona. Edge cases, fluxos, uso real. |
 
 > Skills de direção (`/hm-align`, `/hm-sequoia`) estão em [highermind-business-skills](https://github.com/rodrigohighermind/highermind-business-skills).
@@ -48,12 +48,12 @@ Duas camadas:
 ```
 /hm-init       você começa um projeto novo. ele nasce certo.
 [constrói]     você dirige, o agente executa.
-/hm-design     você valida se a interface está na barra.
+/hm-designer   você valida se a interface está na barra.
 /hm-engineer   você valida se o código está na barra.
 /hm-qa         você verifica que realmente funciona.
 ```
 
-Você não precisa usar as quatro toda vez. Use o que o momento pede. `/hm-engineer` e `/hm-design` podem rodar várias vezes enquanto você itera.
+Você não precisa usar as quatro toda vez. Use o que o momento pede. `/hm-engineer` e `/hm-designer` podem rodar várias vezes enquanto você itera.
 
 > Pra validar direção e estratégia, use as [business skills](https://github.com/rodrigohighermind/highermind-business-skills): `/hm-align` (é a coisa certa?) e `/hm-sequoia` (está indo pro futuro?).
 
@@ -78,7 +78,7 @@ Claude: [Implementa: formulário multi-step, fila de revisão, motor de
         decisão, notificações por email, tracking de status, lógica
         de reaplicação.]
 
-Você:  /hm-design
+Você:  /hm-designer
 
 Claude: O formulário usa layout padrão com cards e bordas cinza.
         Isso é software de 2020. Problemas:
@@ -170,13 +170,13 @@ O padrão: se você estivesse vendendo esse software e o comprador contratasse e
 
 ---
 
-## `/hm-design`
+## `/hm-designer`
 
 **Validar interface.**
 
 Não é "faz bonito." É visão.
 
-O design de software está se movendo. O que parecia moderno em 2020 parece datado agora. O que parece moderno agora vai parecer datado em 2028. `/hm-design` não valida contra o padrão de hoje. Valida contra pra onde o software está indo.
+O design de software está se movendo. O que parecia moderno em 2020 parece datado agora. O que parece moderno agora vai parecer datado em 2028. `/hm-designer` não valida contra o padrão de hoje. Valida contra pra onde o software está indo.
 
 A barra:
 
@@ -270,7 +270,7 @@ cd ~/.claude/skills/highermind-code-skills && git fetch origin && git reset --ha
 ## Desinstalação
 
 ```
-for s in hm-init hm-engineer hm-design hm-qa; do rm -f ~/.claude/skills/$s; done && rm -rf ~/.claude/skills/highermind-code-skills
+for s in hm-init hm-engineer hm-designer hm-qa; do rm -f ~/.claude/skills/$s; done && rm -rf ~/.claude/skills/highermind-code-skills
 ```
 
 ---
