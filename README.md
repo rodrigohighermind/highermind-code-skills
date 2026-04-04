@@ -2,7 +2,7 @@
 
 **Antes de existir uma empresa, existiu uma mente que decidiu construir.**
 
-Quatro modos cognitivos de execução para o [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Construído em cima da filosofia Higher Mind: empresas são extensões da arquitetura interna do fundador. Se o código é mediano, o padrão era mediano. Se o software é world-class, a mente por trás dele exigiu world-class.
+Cinco modos cognitivos de execução para o [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Construído em cima da filosofia Higher Mind: empresas são extensões da arquitetura interna do fundador. Se o código é mediano, o padrão era mediano. Se o software é world-class, a mente por trás dele exigiu world-class.
 
 Skills de direção estratégica (`/hm-align`, `/hm-sequoia`) estão em [highermind-business-skills](https://github.com/rodrigohighermind/highermind-business-skills).
 
@@ -35,9 +35,10 @@ Duas camadas:
 | Skill | Quando | O que faz |
 | --- | --- | --- |
 | `/hm-init` | Início de projeto | Melhores ferramentas, melhor estrutura, melhores práticas. World-class desde o primeiro arquivo. |
-| `/hm-engineer` | Validar código | Arquitetura, segurança, performance, qualidade. Todas as camadas. Production-grade. |
+| `/hm-engineer` | Validar código | Arquitetura, segurança, performance, custo, qualidade. Todas as camadas. Production-grade. |
 | `/hm-designer` | Validar interface | Pra onde o software está indo, não pra onde ele esteve. Sofisticação, encantamento, beleza. |
-| `/hm-qa` | Testar tudo | Roda, quebra, verifica que funciona. Edge cases, fluxos, uso real. |
+| `/hm-qa` | Testar tudo | Roda, quebra, verifica que funciona. Edge cases, fluxos, agente, infra, uso real. |
+| `/hm-deploy` | Validar deploy | Containers, migrations, reprodutibilidade, segurança. Pronto pra sair do local. |
 
 > Skills de direção (`/hm-align`, `/hm-sequoia`) estão em [highermind-business-skills](https://github.com/rodrigohighermind/highermind-business-skills).
 
@@ -51,6 +52,7 @@ Duas camadas:
 /hm-designer   você valida se a interface está na barra.
 /hm-engineer   você valida se o código está na barra.
 /hm-qa         você verifica que realmente funciona.
+/hm-deploy     você valida que sobe, roda e reproduz.
 ```
 
 Você não precisa usar as quatro toda vez. Use o que o momento pede. `/hm-engineer` e `/hm-designer` podem rodar várias vezes enquanto você itera.
@@ -137,15 +139,17 @@ Isso codifica o seu padrão uma vez. O agente opera no seu nível desde o primei
 
 Você abre um projeto novo. Digita `/hm-init` e descreve o que quer construir. O agente não faz só scaffold. Ele toma decisões:
 
-- O melhor framework pra esse tipo de projeto
+- O melhor framework pra esse tipo de projeto (com framework de decisão ponderado)
 - O melhor banco de dados, ORM, solução de auth
 - A melhor estrutura de pastas e patterns de arquitetura
+- Agent-first como default arquitetural (quando aplicável)
+- Infraestrutura local com Docker Compose desde o dia 1
+- Restrições de custo como parte do design
 - Setup de testes desde o dia um
-- Configuração de CI/CD
 - Gerenciamento de environments
 - Formatação e linting do código
 
-Cada escolha é justificada. Nada é padrão. Nada é "a gente geralmente usa isso." Cada ferramenta é a melhor ferramenta disponível pra esse projeto específico.
+Cada escolha é justificada contra critérios explícitos: fit pro problema, performance, custo em produção, maturidade, ecossistema, DX. Nada é padrão. Nada é "a gente geralmente usa isso."
 
 O padrão: se um time de engenharia world-class olhasse pra esse projeto no dia um, diria "é assim que se começa um projeto."
 
@@ -155,18 +159,21 @@ O padrão: se um time de engenharia world-class olhasse pra esse projeto no dia 
 
 **Validar código.**
 
-Você digita `/hm-engineer` e o agente audita tudo. Não é lint. Não é estilo. É estrutura.
+Você digita `/hm-engineer` e o agente audita tudo. Não é lint. Não é estilo. É estrutura, segurança, custo e resiliência.
 
-O que ele checa:
+Começa com um baseline inegociável de engenheiro senior (zero bare except, zero any types, zero fire-and-forget, zero secrets hardcoded). Depois audita:
 
-- **Arquitetura**: responsabilidades estão separadas corretamente? Boundaries estão limpos?
-- **Segurança**: injection, auth bypass, secrets expostos, trust boundaries, CSRF, validação de dados
-- **Performance**: N+1 queries, indexes faltando, re-renders desnecessários, bundle size, caching
-- **Resiliência**: tratamento de erros, retry logic, failure modes, race conditions, integridade de dados
-- **Qualidade**: cobertura de testes, qualidade dos testes, naming, abstrações, saúde das dependências
-- **Escala**: vai aguentar em 10x? 100x? Onde estão os gargalos?
+- **Arquitetura**: responsabilidades, boundaries, data flow, agent loops
+- **Segurança**: injection, auth bypass, secrets, trust boundaries, CSRF, ports expostos
+- **Performance**: N+1 queries, indexes, re-renders, bundle size, caching, I/O paralelo
+- **Custo x Performance**: API calls justificadas, contexto mínimo em LLMs, token usage consciente
+- **Dados sagrados**: nenhuma operação destrutiva sem confirmação, volumes nomeados, migrations seguras
+- **Infraestrutura**: Docker rebuild vs restart, health checks, ports, migrations
+- **Resiliência**: tratamento de erros, retry logic, failure modes, race conditions
+- **Qualidade**: testes significativos, naming, abstrações, dependências
+- **Escala**: gargalos em 10x e 100x
 
-O padrão: se você estivesse vendendo esse software e o comprador contratasse engenheiros pra auditar o codebase, eles não encontrariam nada pra reclamar.
+O padrão: se você estivesse vendendo esse software e o comprador contratasse engenheiros pra auditar, eles não encontrariam nada pra reclamar.
 
 ---
 
@@ -208,14 +215,35 @@ Código que não é testado não existe. `/hm-qa` roda tudo:
 - Testes de integração pra endpoints de API e fluxos de dados
 - Testes end-to-end pros fluxos críticos do usuário
 - Testes de edge case (estados vazios, valores limites, operações concorrentes)
+- **Verificação de infraestrutura** (containers sobem? migrations rodam? ports corretos? dados persistem?)
+- **Verificação de agente** (tool loops terminam? não alucina tools? custo por interação?)
+- **Integridade de dados** (persistência entre restarts, migrations não-destrutivas, backups)
+- **Check de custo** (API calls por fluxo, contexto mínimo, custo por usuário/mês)
 - Verificação em viewport mobile
-- Testes de estados de erro (o que o usuário vê quando as coisas falham?)
-- Testes de performance (tempos de carregamento, bundle sizes, tempos de resposta da API)
-- Acessibilidade básica (contraste, navegação por teclado, focus states)
+- Testes de performance e acessibilidade básica
 
 O agente não só roda testes. Ele pensa no que deveria ser testado e não está. Encontra os gaps.
 
 O padrão: você deployaria isso com confiança numa sexta à noite.
+
+---
+
+## `/hm-deploy`
+
+**Validar deploy e infraestrutura.**
+
+Você digita `/hm-deploy` e o agente valida que o projeto é reprodutível, seguro e pronto pra sair do local.
+
+O que ele checa:
+
+- **Docker**: containers sobem, ficam healthy, rebuild funciona, dados estão protegidos
+- **Environment**: .env.example completo, nenhum secret exposto, ports documentados
+- **Database**: migrations automáticas, schema consistente, dados persistentes
+- **Health**: endpoints de health check, monitoramento de dependências
+- **Reprodutibilidade**: clone limpo funciona com um comando
+- **Segurança**: ports mínimos, CORS correto, secrets fora de logs
+
+O teste definitivo: um engenheiro novo entra no time na segunda e tem o projeto rodando antes do almoço.
 
 ---
 
@@ -244,7 +272,7 @@ Edite `~/.claude/CLAUDE.md` pra adicionar seu nome, seus projetos e suas especif
 ### O que é instalado
 
 - Arquivos de skill em `~/.claude/skills/highermind-code-skills/`
-- Symlinks em `~/.claude/skills/hm-init`, `~/.claude/skills/hm-engineer`, etc.
+- Symlinks em `~/.claude/skills/hm-init`, `~/.claude/skills/hm-engineer`, `~/.claude/skills/hm-deploy`, etc.
 - `CLAUDE.md.template` como ponto de partida pro seu arquivo de identidade global
 
 Tudo fica dentro de `~/.claude/`. Nada toca seu PATH ou roda em background.
@@ -270,7 +298,7 @@ cd ~/.claude/skills/highermind-code-skills && git fetch origin && git reset --ha
 ## Desinstalação
 
 ```
-for s in hm-init hm-engineer hm-designer hm-qa; do rm -f ~/.claude/skills/$s; done && rm -rf ~/.claude/skills/highermind-code-skills
+for s in hm-init hm-engineer hm-designer hm-qa hm-deploy; do rm -f ~/.claude/skills/$s; done && rm -rf ~/.claude/skills/highermind-code-skills
 ```
 
 ---

@@ -9,7 +9,7 @@ echo "  highermind-code-skills"
 echo "  ----------------------"
 echo ""
 
-for skill in hm-init hm-engineer hm-designer hm-qa; do
+for skill in hm-init hm-engineer hm-designer hm-qa hm-deploy; do
     target="$SKILLS_DIR/$skill"
     if [ -L "$target" ] || [ -e "$target" ]; then
         rm -rf "$target"
@@ -25,6 +25,7 @@ echo "    /hm-init       Começar um novo projeto"
 echo "    /hm-engineer   Validar código"
 echo "    /hm-designer   Validar interface"
 echo "    /hm-qa         Testar tudo"
+echo "    /hm-deploy     Validar deploy e infra"
 echo ""
 echo "  Skills de direção (highermind-business-skills):"
 echo "    /hm-align      Checar alinhamento de produto"

@@ -1,13 +1,14 @@
 # highermind-code-skills
 
-Quatro modos cognitivos de execução pro Claude Code, construídos na filosofia Higher Mind.
+Cinco modos cognitivos de execução pro Claude Code, construídos na filosofia Higher Mind.
 
 ## Skills disponíveis
 
 - `/hm-init` — Começar um novo projeto com as melhores ferramentas e estrutura
-- `/hm-engineer` — Validar código em todas as camadas (arquitetura, segurança, performance, qualidade)
+- `/hm-engineer` — Validar código em todas as camadas (arquitetura, segurança, performance, custo, qualidade)
 - `/hm-designer` — Validar interface contra o mais alto padrão de design de software
 - `/hm-qa` — Testar tudo, encontrar gaps, verificar que funciona
+- `/hm-deploy` — Validar infraestrutura, containers, reprodutibilidade e segurança de deploy
 
 Skills de direção estratégica (`/hm-align`, `/hm-sequoia`) estão em [highermind-business-skills](https://github.com/rodrigohighermind/highermind-business-skills).
 
