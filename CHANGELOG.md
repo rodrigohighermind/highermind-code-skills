@@ -6,6 +6,61 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ---
 
+## [3.0.0] — 2026-04-08
+
+Security-first evolution. Todas as skills agora tratam seguranca como pre-requisito bloqueante, nao checklist final. Motivado por falhas reais encontradas no Orion Finance (Dockerfile rodando `npm run dev` em producao, sem `.dockerignore`, `--reload` no entrypoint) que passaram pelas skills v2 sem ser detectadas.
+
+### Adicionado
+
+#### `/hm-deploy` — Security Gate bloqueante
+- Nova secao **0. Security Gate** que roda ANTES de tudo
+- Se qualquer item CRITICO falha, o deploy e BLOQUEADO automaticamente
+- Tabela completa de checks com severidades explicitas
+- `.dockerignore` ausente = PARA TUDO, cria antes de continuar
+- Dev server em producao (`npm run dev`, `--reload`) = CRITICO
+- Non-root user, build secrets, CORS, Swagger/debug — tudo com severidade definida
+- Output atualizado com secao SECURITY GATE no topo
+- Tabela de ports atualizada com todos os projetos (incluindo orion-finance e hm-product-lab)
+
+#### `/hm-engineer` — OWASP Top 10 e Container Security
+- Nova secao **Seguranca — Aplicacao (OWASP Top 10)** com tabela completa dos 10 items
+- Nova secao **Seguranca — Container & Infraestrutura** com 9 checks explicitos e severidades
+- Nova secao **Seguranca — Dependencias** (CVEs, lock files, supply chain)
+- Regra: seguranca e SEMPRE a primeira camada auditada
+- Regra: se `.dockerignore` nao existe, parar auditoria ate resolver
+- Regra: todo finding de seguranca e CRITICO, sem excecao
+
+#### `/hm-init` — Seguranca desde o primeiro commit
+- Nova secao **6. Seguranca desde o primeiro commit** (OBRIGATORIA)
+- `.dockerignore` template completo — obrigatorio em todo projeto com Docker
+- Dockerfiles production-ready com exemplos (Python multi-stage, Next.js standalone)
+- Entrypoints separados dev/prod como padrao
+- Regras de secrets reforçadas
+- Dependency audit no init
+- Health check que verifica dependencias reais
+- Criterio de **Seguranca** adicionado a tabela de avaliacao de stack
+
+#### `/hm-qa` — Security Audit como primeira etapa
+- Nova secao **0. Security Audit** que roda ANTES de testes funcionais
+- Sub-secoes: Dependencias, Container Security, OWASP Quick Scan, Secrets Scan
+- Grep por patterns de secrets no codebase
+- Verificacao de secrets em commits anteriores (`git log --all -S`)
+- Prioridade de testes reordenada: seguranca primeiro
+- Finding de seguranca bloqueia ship
+
+### Mudado
+
+- Todas as 4 code skills agora marcadas como v2 no titulo
+- Seguranca movida de "uma das camadas" para "pre-requisito bloqueante"
+- Output de todas as skills agora tem secao de seguranca no topo
+- Severidades de seguranca padronizadas: CRITICO (nunca MEDIO, nunca BAIXO)
+
+### Filosofia
+
+A v2 tratava seguranca como uma camada de auditoria. A v3 trata como gate. A diferenca: na v2, voce podia listar um problema de seguranca como MEDIO e continuar. Na v3, seguranca bloqueia. Nao importa se o resto funciona perfeitamente — se `.dockerignore` nao existe, se o Dockerfile roda dev server, se secrets estao expostos, o veredicto e BLOQUEADO.
+
+---
+
 ## [2.0.0] — 2026-04-03
 
 Evolução completa das skills baseada em aprendizados reais de 5+ projetos construídos com o framework (higher-mind-os, Scout, HM Finance, Orion, higher-mind-community).
