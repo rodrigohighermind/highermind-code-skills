@@ -90,6 +90,8 @@ Se qualquer um desses existe, e finding CRITICO automatico.
 - I/O paralelo onde possivel (asyncio.gather, Promise.all)
 - Memoizacao de computacoes caras
 
+> Pra profiling profundo com metas concretas (LCP, FID, p95 latency, bundle size por rota, custo LLM por turn, memory leak detection), usar `/hm-performance`.
+
 ### LLM-app patterns (OBRIGATORIO se app integra LLM)
 
 Apps que usam Claude/GPT/Gemini tem gotchas recorrentes que scanners nao pegam. Auditoria explicita:

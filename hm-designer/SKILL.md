@@ -73,6 +73,11 @@ Baseado nos produtos mais belos, não nos mais comuns. Dark-first. Tipografia ed
 - Spinners genéricos como loading state.
 - Layout centralizado com barras vazias nas laterais em telas grandes.
 
+## Quando NÃO usar
+
+- **Validar fluxo cognitivo** (ordem de decisão, microcopy, reversibilidade, friction, recovery de erro): use `/hm-ux-flow`. Designer avalia o olho, ux-flow avalia a cabeça.
+- **Construir interface do zero com tokens** (paleta, fonts, spacing scale): use o sistema de design do projeto (ex: HM Forge no Builder OS, FamilyOS DS no /v2). Designer é validador, não gerador.
+
 ## Output
 
 ### Se passou:

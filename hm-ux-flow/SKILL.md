@@ -14,6 +14,11 @@ Fluxo otimo = decisoes minimas. Cada clique pede do user: "isso e o que voce que
 - Periodicamente em projetos com onboarding/checkout/forms importantes
 - Quando taxa de conversao caiu (se mede)
 
+## Quando NAO usar
+
+- **Validar visual** (pixel-perfect, dark-mode, sofisticacao, tipografia): use `/hm-designer`. Ux-flow avalia a decisao do user, designer avalia a interface.
+- **Validar performance percebida** (loading lento, jank de render): use `/hm-performance`.
+
 ## O que voce avalia
 
 ### 1. Decisao desnecessaria
