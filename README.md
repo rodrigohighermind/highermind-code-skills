@@ -2,7 +2,7 @@
 
 **Antes de existir uma empresa, existiu uma mente que decidiu construir.**
 
-Cinco modos cognitivos de execução para o [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Construído em cima da filosofia Higher Mind: empresas são extensões da arquitetura interna do fundador. Se o código é mediano, o padrão era mediano. Se o software é world-class, a mente por trás dele exigiu world-class.
+Doze modos cognitivos de execução para o [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Construído em cima da filosofia Higher Mind: empresas são extensões da arquitetura interna do fundador. Se o código é mediano, o padrão era mediano. Se o software é world-class, a mente por trás dele exigiu world-class.
 
 Skills de direção estratégica (`/hm-align`, `/hm-sequoia`) estão em [highermind-business-skills](https://github.com/rodrigohighermind/highermind-business-skills).
 
@@ -45,6 +45,7 @@ Duas camadas:
 | `/hm-llm-guardrails` | App com LLM | 12 patterns obrigatórios: sliding window, lazy client, in-flight dedupe, streaming abort, schema validation, cross-channel safety, cost tracking. |
 | `/hm-deploy` | Validar deploy | Multi-modelo: Container, Serverless, Desktop (Electron), Mobile (Expo), Library, CLI. Reprodutibilidade, segurança, dados. |
 | `/hm-validate-all` | Pré-ship completo | Orquestrador: dispara as 5 (security/engineer/qa/designer/deploy) em ordem otimizada, consolida findings priorizados. |
+| `/hm-cli` | Construção de CLI | Bun + Ink + bun:sqlite, agentic-first, cinematográfico. Stack obrigatória, 4 camadas de resposta (slash → regex → Sonnet → tool), custo por turn auditado, dados sagrados, learning persistente. |
 
 > Skills de direção (`/hm-align`, `/hm-sequoia`) estão em [highermind-business-skills](https://github.com/rodrigohighermind/highermind-business-skills).
 
@@ -54,6 +55,7 @@ Duas camadas:
 
 ```
 /hm-init           você começa um projeto novo. ele nasce certo.
+/hm-cli            se o produto é CLI: Bun + Ink + agentic-first.
 [constrói]         você dirige, o agente executa.
 /hm-designer       interface na barra.
 /hm-ux-flow        fluxo na barra.
@@ -259,6 +261,32 @@ O teste definitivo: um engenheiro novo entra no time na segunda e tem o projeto 
 
 ---
 
+## `/hm-cli`
+
+**Construção de CLI no padrão Higher Mind.**
+
+Terminal não é console. É cinema com restrição. Cada caractere existe por motivo, cada cor significa algo, cada espaço em branco foi escolhido. A barra: se a Linear, a Stripe, ou a A24 fizessem um CLI hoje, seria esse?
+
+Você digita `/hm-cli` e o agente entra em modo CLI builder. Stack obrigatória:
+
+- **Bun** (não Node) — single binary compile, startup instantâneo, `bun:sqlite` nativo
+- **TypeScript strict** — zero `any`, zero `unknown` sem narrow
+- **Ink** (React no terminal) — componentes compositáveis, `<Static>` pra scrollback nativo, flexbox de verdade
+- **`bun:sqlite`** (NUNCA `better-sqlite3` — não funciona em Bun)
+- **Anthropic SDK** — Sonnet 4.6 pra análise, Haiku 4.5 pra extração
+- **`bun build --compile`** — binário standalone ~60 MB, sem `node`, sem `npm install`
+- Install em `~/.local/bin/<name>` (já no PATH em macOS/Linux, sem sudo)
+
+Filosofia agentic-first: CLI HM é um agente operando num terminal, não um menu de comandos. Conversa é a interface primária. Slash commands existem pra atalhos rápidos, não pra obrigar o user a aprender sintaxe.
+
+Arquitetura: 4 camadas de resposta, em ordem de custo. Slash command (zero token) → intent local regex (zero token) → Sonnet com contexto (~$0.003) → tool call (zero LLM). Regra de ouro: se a pergunta tem resposta em dado bruto local, camada 1-2 resolve. Sonnet só pra análise/insight.
+
+Inclui patterns canônicos pra: blocks visuais (border + padEnd/padStart + bars + sparklines), CFO/banker tone PT-BR, learning persistente (`source='manual'` sobrescreve LLM), dados sagrados (idempotência + confirmação destrutiva), distribuição via release.
+
+O padrão: se a Linear, a Stripe, ou a A24 fizessem um CLI hoje, seria esse.
+
+---
+
 ## Instalação
 
 **Requisitos:** [Claude Code](https://docs.anthropic.com/en/docs/claude-code), [Git](https://git-scm.com/).
@@ -310,7 +338,7 @@ cd ~/.claude/skills/highermind-code-skills && git fetch origin && git reset --ha
 ## Desinstalação
 
 ```
-for s in hm-init hm-engineer hm-designer hm-qa hm-deploy; do rm -f ~/.claude/skills/$s; done && rm -rf ~/.claude/skills/highermind-code-skills
+for s in hm-init hm-engineer hm-security hm-designer hm-ux-flow hm-qa hm-performance hm-data-integrity hm-llm-guardrails hm-deploy hm-validate-all hm-cli; do rm -f ~/.claude/skills/$s; done && rm -rf ~/.claude/skills/highermind-code-skills
 ```
 
 ---

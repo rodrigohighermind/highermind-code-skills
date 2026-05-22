@@ -6,6 +6,43 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ---
 
+## [3.2.0] — 2026-05-22
+
+Auditoria completa do ecossistema HM Skills + nova skill `/hm-cli`. Decisões cravadas em `AUDIT_DECISIONS.md` na raiz do repo.
+
+### Adicionado
+
+#### Nova skill: `/hm-cli` — Construção de CLI no padrão Higher Mind
+- Stack obrigatória: **Bun + TypeScript strict + Ink (React no terminal) + bun:sqlite + Anthropic SDK + `bun build --compile`**. Anti-stack documentado (commander.js, chalk, npm em produto local-first).
+- Filosofia agentic-first: CLI como agente operando num terminal, não menu de comandos. Conversa é a interface primária.
+- Arquitetura 4 camadas de resposta em ordem de custo: slash command (zero token) → intent local regex (zero token) → Sonnet com contexto (~$0.003) → tool call (zero LLM).
+- Hierarquia de custo cravada: atalho local $0 → cache de descrição $0 → Haiku 4.5 ~$0.001 → Sonnet 4.6 sem tool ~$0.003 → Sonnet com tools ~$0.01-0.05.
+- Patterns canônicos: blocks visuais (border + padEnd/padStart + bars + sparklines), CFO/banker tone PT-BR completo, learning persistente (`source='manual'` sobrescreve LLM), dados sagrados (idempotência + confirmação destrutiva), distribuição via release.
+- Working memory truncate (15 turns máx), prompt cache quando aplicável, abort/cancel em toda chamada async.
+
+### Mudado — refinamentos de fronteira
+
+Auditoria identificou 4 pontos onde cross-reference entre skills clarifica quando usar qual. Edits cirúrgicos, sem mudar comportamento das skills:
+
+- **`/hm-cli`** — adicionada nota apontando pra `/hm-llm-guardrails` pra catálogo completo de patterns LLM em produção.
+- **`/hm-designer`** — nova seção "Quando NÃO usar": referencia `/hm-ux-flow` pra fluxo cognitivo, e sistema de design do projeto pra construir interface do zero.
+- **`/hm-ux-flow`** — nova seção "Quando NÃO usar": referencia `/hm-designer` pra visual e `/hm-performance` pra loading lento/jank.
+- **`/hm-engineer`** — adicionada nota apontando pra `/hm-performance` pra profiling profundo com metas concretas.
+
+### Auditoria
+
+- `AUDIT_DECISIONS.md` documenta inventário tabular das 12 skills code-skills + 2 business-skills, análise de overlap por par, e decisões consolidadas.
+- **Zero deleções de skills HM.** Todas as 14 têm propósito distinto, validado par a par.
+- **`hm-design-system` removida** do `~/.claude/skills/` (estava solta, fora dos repos HM, sem versionamento). Backup em `~/.claude/skills/.archive/hm-design-system-20260522.tar.gz`. Sistemas de design agora vivem dentro de cada projeto (HM Forge no Builder OS, FamilyOS DS no /v2).
+- **PM-pack** (pm-strategy, pm-technical, pm-ops, pm-data, pm-growth) será extraído pra repo próprio `highermind-pm-skills` em sprint separada.
+
+### Estado
+
+- 11 skills → 12 skills no `highermind-code-skills` (+1: `/hm-cli`).
+- 2 skills no `highermind-business-skills` (sem mudança).
+
+---
+
 ## [3.1.1] — 2026-05-13
 
 Polish da v3.1.0. Generalização das regras introduzidas — qualquer contexto específico de projeto sai, regras técnicas ficam.
