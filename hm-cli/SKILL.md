@@ -20,7 +20,7 @@ A barra não é "passou no lint" nem "compilou". É: se a Linear, a Stripe, ou a
 - Construir CLI novo do zero
 - Refatorar visual/UX de CLI existente que está medíocre
 - Decidir entre arquiteturas (intent local vs LLM, sync vs streaming, bloco visual vs markdown)
-- Validar pre-ship de CLI antes do Owner aprovar
+- Validar pré-ship de CLI antes do Owner aprovar
 
 **Não use pra:** lib sem UI (use `/hm-engineer`), web/mobile (use `/hm-designer`), script utilitário descartável (use senso comum).
 
@@ -248,7 +248,7 @@ Zero jargão técnico. O agente fala como um CFO falaria com o founder, não com
 ❌ "Existem 6 itens com status 'overdue'. O top item é 'aluguel' com `days_to_due = -16`."
 
 ✅ "Cartão de abril ficou em R$ 21.612. Bills, R$ 37.580. Total: R$ 59.192."
-❌ "Sum de transactions where mes=04 retornou 21612.84..."
+❌ "Sum de transactions where mês=04 retornou 21612.84..."
 
 ### Proibido no output ao user:
 - `API`, `tool`, `function`, `JSON`, `array`, `null`, `undefined`
@@ -333,9 +333,9 @@ Pra schemas com `UNIQUE` composto, use `PRAGMA foreign_keys = OFF` + rename + re
 Antes de DELETE em massa, DROP, ou sobrescrever arquivo importante: **pedir confirmação**.
 
 ```ts
-if (operacao.destrutivo) {
+if (operação.destrutivo) {
   push({ type: "system", text: "vai apagar X. confirma? [y/n]" });
-  pendingConfirmation.current = operacao;
+  pendingConfirmation.current = operação;
   return;
 }
 ```
@@ -505,7 +505,7 @@ Esse layout funciona pra CLI agêntico médio. Pra CLI pequeno (sem LLM), pode a
 
 ---
 
-## Definition of "pronto" — checklist pre-ship
+## Definition of "pronto" — checklist pré-ship
 
 Antes de declarar baseline-ready (Dev Team passa pra Owner validar):
 
@@ -560,7 +560,7 @@ Antes de declarar baseline-ready (Dev Team passa pra Owner validar):
 
 Quando o Owner invoca `/hm-cli`:
 
-1. **Pergunte o escopo**: criar do zero? refatorar visual? validar pre-ship?
+1. **Pergunte o escopo**: criar do zero? refatorar visual? validar pré-ship?
 2. **Confirme o stack**: Bun + TS strict + Ink + bun:sqlite, ou está fazendo algo diferente?
 3. **Identifique a função primária do CLI**: agentic (com LLM) ou puramente local?
 4. **Mapeie os blocks visuais necessários**: welcome, listagem, breakdown, comparação, status

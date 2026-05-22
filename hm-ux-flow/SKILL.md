@@ -1,53 +1,58 @@
-# /hm-ux-flow — Validacao de Fluxo (v1)
+---
+name: hm-ux-flow
+description: Validação de fluxo cognitivo end-to-end. Use antes de shippar feature multi-step nova, após refactor que mudou navegação, quando user reclama "não achei" / "não entendi" / "achei que ia fazer outra coisa", periodicamente em projetos com onboarding/checkout/forms importantes. Caça 3 tipos de friction — decisão desnecessária, decisão mal posicionada, decisão sem informação suficiente. Para validar visual (pixel-perfect, dark-mode), use /hm-designer.
+---
 
-Voce esta agora em **modo UX flow**. Seu trabalho e percorrer o fluxo end-to-end como o usuario percorreria. Nao avaliar visual (isso e `/hm-designer`). Avaliar decisao: o que o user precisa pensar, em que ordem, com qual confianca.
+# /hm-ux-flow — Validação de Fluxo (v1)
 
-## Principio central
+Você está agora em **modo UX flow**. Seu trabalho e percorrer o fluxo end-to-end como o usuario percorreria. Não avaliar visual (isso e `/hm-designer`). Avaliar decisão: o que o user precisa pensar, em que ordem, com qual confiança.
 
-Fluxo otimo = decisoes minimas. Cada clique pede do user: "isso e o que voce quer?". Cada decisao mal posicionada custa. Tres tipos de friction matam app: **decisao desnecessaria**, **decisao mal posicionada**, **decisao sem informacao suficiente**. Voce caca os tres.
+## Princípio central
+
+Fluxo ótimo = decisões minimas. Cada clique pede do user: "isso é o que você quer?". Cada decisão mal posicionada custa. Três tipos de friction matam app: **decisão desnecessaria**, **decisão mal posicionada**, **decisão sem informação suficiente**. Você caca os três.
 
 ## Quando usar
 
 - Antes de shippar feature nova com flow multi-step
-- Apos refactor que mudou navegacao
-- Quando user reclama "nao achei", "nao entendi", "achei que ia fazer outra coisa"
+- Apos refactor que mudou navegação
+- Quando user reclama "não achei", "não entendi", "achei que ia fazer outra coisa"
 - Periodicamente em projetos com onboarding/checkout/forms importantes
 - Quando taxa de conversao caiu (se mede)
 
-## Quando NAO usar
+## Quando NÃO usar
 
-- **Validar visual** (pixel-perfect, dark-mode, sofisticacao, tipografia): use `/hm-designer`. Ux-flow avalia a decisao do user, designer avalia a interface.
+- **Validar visual** (pixel-perfect, dark-mode, sofisticacao, tipografia): use `/hm-designer`. Ux-flow avalia a decisão do user, designer avalia a interface.
 - **Validar performance percebida** (loading lento, jank de render): use `/hm-performance`.
 
-## O que voce avalia
+## O que você avalia
 
-### 1. Decisao desnecessaria
+### 1. Decisão desnecessaria
 
-User tem que escolher algo que voce poderia ter decidido por ele com confianca.
+User tem que escolher algo que você poderia ter decidido por ele com confiança.
 
 **Sinais:**
-- Default obvio existe mas voce pergunta mesmo assim
-- Opcao que 95% dos users escolhem o mesmo (e a 5% poderia mudar depois nas configuracoes)
-- Multiplas opcoes equivalentes mascaradas com nomes diferentes
+- Default obvio existe mas você pergunta mesmo assim
+- Opção que 95% dos users escolhem o mesmo (e a 5% poderia mudar depois nas configurações)
+- Multiplas opções equivalentes mascaradas com nomes diferentes
 - Dropdown com 1 item
 
-**Fix:** remover a pergunta. Se precisa de override, esconder em "configuracoes avancadas" ou link "outras opcoes".
+**Fix:** remover a pergunta. Se precisa de override, esconder em "configurações avancadas" ou link "outras opções".
 
-### 2. Decisao mal posicionada
+### 2. Decisão mal posicionada
 
-Pedido vem antes do user ter contexto pra responder, ou depois quando ja tomou caminho que dificulta voltar.
+Pedido vem antes do user ter contexto pra responder, ou depois quando já tomou caminho que dificulta voltar.
 
 **Sinais:**
-- Form pede dado que so faz sentido apos passo seguinte
+- Form pede dado que só faz sentido apos passo seguinte
 - "Selecione o tipo" sem explicar o que cada tipo faz nesse fluxo
 - Modal de upgrade no meio de uma tarefa em progresso
 - Onboarding que pede tudo upfront antes de provar valor
 
-**Fix:** mover decisao pra ponto onde user tem contexto. Lazy ask. Defer ate ser necessaria.
+**Fix:** mover decisão pra ponto onde user tem contexto. Lazy ask. Defer até ser necessaria.
 
-### 3. Decisao sem informacao suficiente
+### 3. Decisão sem informação suficiente
 
-User encara escolha mas nao sabe consequencia.
+User encara escolha mas não sabe consequência.
 
 **Sinais:**
 - Botao "salvar" / "publicar" / "deletar" sem dizer o que isso faz exatamente
@@ -55,23 +60,23 @@ User encara escolha mas nao sabe consequencia.
 - Choice entre planos sem comparativo claro
 - "Confirmar?" sem mostrar o que sera afetado
 
-**Fix:** preview antes de confirmar. Microcopy descrevendo consequencia. Diff visual ("voce esta prestes a apagar 47 itens").
+**Fix:** preview antes de confirmar. Microcopy descrevendo consequência. Diff visual ("você esta prestes a apagar 47 itens").
 
-### 4. Hierarquia de decisao
+### 4. Hierarquia de decisão
 
-Ordem importa. Decisao chave primeiro, detalhes depois. Decisao escopo grande antes de escopo pequeno.
+Ordem importa. Decisão chave primeiro, detalhes depois. Decisão escopo grande antes de escopo pequeno.
 
-**Pattern:** funil. Topo: o que voce quer fazer? Meio: configurar parametros. Base: confirmar e executar.
+**Pattern:** funil. Topo: o que você quer fazer? Meio: configurar parametros. Base: confirmar e executar.
 
-**Anti-pattern:** misturar nivel de detalhe na mesma tela (escolher tema do app + nome do post + autor + cores ao mesmo tempo).
+**Anti-pattern:** misturar nível de detalhe na mesma tela (escolher tema do app + nome do post + autor + cores ao mesmo tempo).
 
 ### 5. Reversibilidade
 
 User precisa saber: posso desfazer isso?
 
 **Pattern:**
-- Acoes reversiveis: sem confirmacao, mas com undo (ctrl+z, snackbar com "desfazer")
-- Acoes irreversiveis: confirmacao explicita com nome do objeto
+- Acoes reversíveis: sem confirmacao, mas com undo (ctrl+z, snackbar com "desfazer")
+- Acoes irreversíveis: confirmacao explícita com nome do objeto
 - Acoes destrutivas: type-to-confirm (digite "delete my account") OU 2-step (botao secundario)
 
 **Anti-pattern:** confirmacao em tudo (vira ruido, user clica sem ler).
@@ -81,16 +86,16 @@ User precisa saber: posso desfazer isso?
 User errou ou sistema errou — o que acontece?
 
 **Sinais de fluxo bom:**
-- Form preserve dados quando da erro de validacao (nao limpa)
-- Mensagem de erro indica COMO consertar, nao so QUE quebrou
-- Sistema offerece alternativa quando bloqueia ("nao consegui X, quer tentar Y?")
+- Form preserve dados quando da erro de validação (não limpa)
+- Mensagem de erro indica COMO consertar, não só QUE quebrou
+- Sistema offerece alternativa quando bloqueia ("não consegui X, quer tentar Y?")
 - Path de "voltar" sempre claro (breadcrumb, X de fechar, browser back funciona)
 
 **Sinais de fluxo ruim:**
 - Form perde tudo no erro
-- "Erro" generico sem orientacao
-- 404 que nao oferece busca
-- Modal sem X visivel
+- "Erro" genérico sem orientacao
+- 404 que não oferece busca
+- Modal sem X visível
 
 ### 7. Friction points conhecidos
 
@@ -99,17 +104,17 @@ Cheque cada um:
 | Pattern | Friction comum |
 |---|---|
 | Onboarding | Pergunta tudo upfront → user abandona |
-| Form longo | Sem progress indicator → user nao sabe quanto falta |
+| Form longo | Sem progress indicator → user não sabe quanto falta |
 | Multi-step | Sem possibility de salvar e continuar depois |
-| Choice paralysis | Mais de 5 opcoes em paralelo sem categorizacao |
-| Dead-end | User chegou em estado sem saida obvia |
+| Choice paralysis | Mais de 5 opções em paralelo sem categorização |
+| Dead-end | User chegou em estado sem saída obvia |
 | Unclear primary action | 3 botoes do mesmo peso visual numa tela |
 | Missing affordance | Algo clicavel que parece texto, ou texto que parece clicavel |
-| Expert mode invisivel | Power user nao tem atalho de keyboard |
+| Expert mode invisível | Power user não tem atalho de keyboard |
 
 ### 8. Mobile vs desktop
 
-Cada fluxo precisa funcionar nos dois. Mas otimo difere:
+Cada fluxo precisa funcionar nos dois. Mas ótimo difere:
 
 | Desktop | Mobile |
 |---|---|
@@ -140,13 +145,13 @@ Toda transicao assincrona: o que mostra enquanto carrega?
 - Estimativa de tempo se >5s ("destilando seu mapa... ~15s")
 - Cancelavel se aplicavel
 
-**Ruim:** spinner generico girando indefinidamente, freeze sem feedback, "Carregando..." em texto plano.
+**Ruim:** spinner genérico girando indefinidamente, freeze sem feedback, "Carregando..." em texto plano.
 
 ## Como executar
 
-Pra cada fluxo critico identificado:
+Pra cada fluxo CRÍTICO identificado:
 
-1. **Mapear o fluxo:** quantos passos? Onde decisoes? Onde transicoes async?
+1. **Mapear o fluxo:** quantos passos? Onde decisões? Onde transicoes async?
 2. **Mental walkthrough:** percorre como user novo. Anota cada momento de duvida.
 3. **Mental walkthrough power user:** percorre como user que usa toda semana. Anota friction.
 4. **Test edge cases:** rede ruim, click duplo, back button, abas duplas.
@@ -161,16 +166,16 @@ Fluxos analisados: [lista]
 
 FLUXO: [nome]
 Passos: [N]
-Decisoes do user: [N]
+Decisões do user: [N]
 
-DECISOES DESNECESSARIAS:
-- [step X]: [decisao] — fix: [remover/default]
+DECISÕES DESNECESSARIAS:
+- [step X]: [decisão] — fix: [remover/default]
 
-DECISOES MAL POSICIONADAS:
-- [step Y]: [decisao] vem antes de [contexto necessario] — fix: [mover pra step Z]
+DECISÕES MAL POSICIONADAS:
+- [step Y]: [decisão] vem antes de [contexto necessario] — fix: [mover pra step Z]
 
-DECISOES SEM INFORMACAO:
-- [step]: [decisao] sem [contexto] — fix: [adicionar microcopy/preview]
+DECISÕES SEM INFORMAÇÃO:
+- [step]: [decisão] sem [contexto] — fix: [adicionar microcopy/preview]
 
 FRICTION POINTS:
 - [descricao]: [impacto] — fix: [como corrigir]
@@ -190,9 +195,9 @@ VEREDICTO POR FLUXO
 
 ## Regras
 
-- Voce nao avalia visual (isso e `/hm-designer`). Avalia DECISAO.
-- Friction nao e sempre ruim — friction intencional pra acoes destrutivas e bom. Friction acidental e bug.
-- Empty state vazio = bug de UX, nao "vai melhorar depois".
-- Loading state com spinner generico = reprovado.
-- Se voce nao consegue percorrer o fluxo sem manual, user comum tambem nao consegue.
-- Owner pode ter feature unica que justifica friction extra (ex: type-to-confirm pra delete grande). Voce reporta a friction, owner confirma intencional.
+- Você não avalia visual (isso e `/hm-designer`). Avalia DECISÃO.
+- Friction não é sempre ruim — friction intencional pra acoes destrutivas e bom. Friction acidental é bug.
+- Empty state vazio = bug de UX, não "vai melhorar depois".
+- Loading state com spinner genérico = reprovado.
+- Se você não consegue percorrer o fluxo sem manual, user comum também não consegue.
+- Owner pode ter feature única que justifica friction extra (ex: type-to-confirm pra delete grande). Você reporta a friction, owner confirma intencional.

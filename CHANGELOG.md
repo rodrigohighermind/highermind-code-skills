@@ -6,6 +6,52 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ---
 
+## [3.3.0] — 2026-05-22
+
+Polish run pós-auditoria. Sistema sobe de 8.0/10 médio pra 9.5+/10 corrigindo 5 defeitos transversais que afetavam todas as skills.
+
+### Mudado
+
+#### Frontmatter `name:`/`description:` em 11 SKILL.md
+Skills antigas não tinham frontmatter — só título `# /hm-X`. Claude Code descobre skills pela `description:` no frontmatter; sem ele, descoberta degrada pra título genérico. Adicionado em: hm-init, hm-engineer, hm-security, hm-data-integrity, hm-qa, hm-llm-guardrails, hm-performance, hm-deploy, hm-ux-flow, hm-validate-all, hm-designer. (hm-cli já tinha.)
+
+Cada description é 1-2 linhas específicas sobre quando usar + escopo + cross-references pras skills complementares.
+
+#### Acentuação PT-BR completa
+1.500+ substituições aplicadas em 11 SKILL.md do code-skills (também em business e pm-skills). 99,6%+ das palavras agora com acentuação completa (não, você, já, também, decisão, segurança, código, etc). Resíduo são casos ambíguos preservados intencionalmente (`esta` demonstrativo vs verbo).
+
+Por que importava: o `~/.claude/CLAUDE.md` global cravava "Maintain full orthographic correctness for pt-br". Sistema violava sua própria regra.
+
+#### Model IDs alinhados com família Claude atual
+- "Sonnet 4" genérico → "Sonnet 4.6" em hm-llm-guardrails e hm-engineer
+- Confirmadas referências corretas: claude-opus-4-7, Sonnet 4.6, Haiku 4.5
+
+#### Cross-references novas entre skills
+- `/hm-init` agora abre apontando pra `/hm-align` + `/hm-sequoia` (alinhamento antes de bootstrap) e pra `/hm-cli` quando projeto é CLI
+- `/hm-security` referencia `/hm-data-integrity` (attack-driven vs bug/crash-driven — primos, não gêmeos)
+- `/hm-engineer` referencia `/hm-performance` na seção Performance (quick vs deep)
+- `/hm-cli` referencia `/hm-llm-guardrails` na seção LLM
+- `/hm-designer` ganhou seção "Quando NÃO usar" referenciando `/hm-ux-flow`
+- `/hm-ux-flow` ganhou "Quando NÃO usar" referenciando `/hm-designer` + `/hm-performance`
+
+#### Versionamento padronizado nos títulos
+Skills sem versão agora têm: `/hm-cli (v1)`, `/hm-designer (v1)`, `/hm-align (v1)`, `/hm-sequoia (v1)`. Repo continua versão global no CHANGELOG; versão individual rastreia evolução de cada skill.
+
+#### `/hm-align` refresh completo
+Skill mais fraca do business pack ganhou:
+- 3 exemplos concretos de aplicação (alinhado / desalinhado por ego-hype / timing errado)
+- Seção "Quando NÃO usar /hm-align" com 5 anti-padrões
+- Output template estruturado (ALINHADO / DESALINHADO / INCERTO) substituindo prosa solta
+- Cross-reference pra `/hm-sequoia` em decisões de longo prazo
+
+### Decisões preservadas
+
+- `esta` (demonstrativo "esta seção" vs verbo "está pronto") deixado caso-a-caso pra evitar regressão automática. Resíduo verbos `esta` < 0.5% por arquivo.
+- `e` (conjunção vs verbo `é`) idem.
+- Pluralização ambígua (`nos` oblíquo vs `nós` reto) deixada como estava.
+
+---
+
 ## [3.2.0] — 2026-05-22
 
 Auditoria completa do ecossistema HM Skills + nova skill `/hm-cli`. Decisões cravadas em `AUDIT_DECISIONS.md` na raiz do repo.

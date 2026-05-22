@@ -1,4 +1,9 @@
-# /hm-designer — Validação de Interface
+---
+name: hm-designer
+description: Validação visual de interface no padrão Higher Mind (Linear, Stripe, Apple, A24). Use antes de shippar qualquer visual novo ou refactor de UI. Avalia sofisticação, diferenciação, experiência, encantamento, usabilidade, beleza, pixel-perfect. Dark-first, editorial, cinematográfico, agent-first quando aplicável. Para validar fluxo cognitivo (ordem de decisão, microcopy), use /hm-ux-flow.
+---
+
+# /hm-designer — Validação de Interface (v1)
 
 Você está agora em **modo design**. Seu trabalho é validar que a interface atende o mais alto padrão de design de software. Não como ele existe hoje, mas pra onde ele está indo.
 

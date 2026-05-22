@@ -1,10 +1,15 @@
+---
+name: hm-performance
+description: Profiling com metas concretas e fix por gargalo. Use antes de shippar feature performance-critical (chat, lista grande, dashboard), quando user reclama "tá lento", após refactor em data flow, periodicamente em projetos com escala, quando custo de LLM/API explode. Cobre 8 domínios — bundle size, Web Vitals (LCP/INP/CLS), API latency (p50/p95/p99), database queries, LLM tokens+cost, network, memory, build performance. Numbers concretos, não especulação.
+---
+
 # /hm-performance — Performance Profiling (v1)
 
-Voce esta agora em **modo performance**. Seu trabalho e medir e localizar gargalos. Nao especular. Nao adivinhar. Numeros concretos, com fix especifico pra cada metrica fora do alvo.
+Você está agora em **modo performance**. Seu trabalho e medir e localizar gargalos. Não especular. Não adivinhar. Números concretos, com fix especifico pra cada métrica fora do alvo.
 
-## Principio central
+## Princípio central
 
-Performance nao e uma feature. E uma restricao de design. App lento e bug. Latencia alta no LLM e custo alto disfarcado. Bundle inflado e tempo de carga perdido. Cada milissegundo importa porque o usuario sente, mesmo que nao consiga nomear.
+Performance não é uma feature. E uma restrição de design. App lento é bug. Latencia alta no LLM e custo alto disfarcado. Bundle inflado e tempo de carga perdido. Cada milissegundo importa porque o usuario sente, mesmo que não consiga nomear.
 
 ## Quando usar
 
@@ -18,7 +23,7 @@ Performance nao e uma feature. E uma restricao de design. App lento e bug. Laten
 
 ### 1. Frontend — Bundle size
 
-| Metrica | Alvo | Critico se |
+| Métrica | Alvo | CRÍTICO se |
 |---|---|---|
 | First-load JS (Next.js) | <200KB gzipped | >400KB |
 | Per-route JS | <100KB gzipped | >200KB |
@@ -48,7 +53,7 @@ du -sh .next/static/chunks/*.js | sort -h | tail
 
 ### 2. Frontend — Render performance
 
-| Metrica | Alvo |
+| Métrica | Alvo |
 |---|---|
 | LCP (Largest Contentful Paint) | <2.5s |
 | FID/INP (Interaction to Next Paint) | <200ms |
@@ -63,20 +68,20 @@ du -sh .next/static/chunks/*.js | sort -h | tail
 
 **Anti-patterns:**
 - Inline objects/arrays como props (criam novo ref a cada render → quebra memo)
-- useEffect com dependencias erradas (re-roda demais OU stale closure)
+- useEffect com dependências erradas (re-roda demais OU stale closure)
 - Lista grande sem virtualizacao (>200 items, usa react-window/tanstack-virtual)
 - Imagens sem `next/image` (sem optimization, sem lazy)
 - Web fonts sem `font-display: swap` (FOIT)
 
 ### 3. Backend — API latency
 
-| Metrica | Alvo |
+| Métrica | Alvo |
 |---|---|
 | p50 endpoint normal | <100ms |
 | p95 endpoint normal | <300ms |
 | p99 endpoint normal | <800ms |
 | Endpoint com LLM streaming | First token <2s, total proporcional |
-| Endpoint background (analytics, etc) | Aceitavel >1s |
+| Endpoint background (analytics, etc) | Aceitável >1s |
 
 **Como medir:**
 - Logging estruturado com `start_time` / `duration_ms` por request
@@ -87,7 +92,7 @@ du -sh .next/static/chunks/*.js | sort -h | tail
 - N+1 query: 1 query parent + N queries por filho (use JOIN ou batch via `inArray`)
 - Query sem index na coluna usada em WHERE/ORDER BY
 - Full table scan em tabela >10k rows
-- Operacao bloqueante no event loop (Node) — mover pra worker
+- Operação bloqueante no event loop (Node) — mover pra worker
 - Sync I/O em paths quentes
 
 ### 4. Database
@@ -95,7 +100,7 @@ du -sh .next/static/chunks/*.js | sort -h | tail
 | Check | Como verificar |
 |---|---|
 | Indexes nas queries criticas | EXPLAIN ANALYZE no Postgres |
-| Conexoes pool dimensionado | pgbouncer ou similar; default ~20 |
+| Conexões pool dimensionado | pgbouncer ou similar; default ~20 |
 | Slow query log ativo | Postgres `log_min_duration_statement = 1000` |
 | Vacuum + autoanalyze configurados | Postgres |
 | Tables grandes paginadas | LIMIT/OFFSET ou cursor-based |
@@ -103,8 +108,8 @@ du -sh .next/static/chunks/*.js | sort -h | tail
 
 **Pattern: cursor-based pagination** pra listas grandes (>1k rows):
 ```ts
-// Nao: OFFSET 50000 (Postgres faz scan ate la)
-// Sim: cursor (ultima createdAt vista)
+// Não: OFFSET 50000 (Postgres faz scan até lá)
+// Sim: cursor (última createdAt vista)
 const items = await db
   .select()
   .from(messages)
@@ -115,24 +120,24 @@ const items = await db
 
 ### 5. LLM — Token cost + latency
 
-| Metrica | Alvo (Claude Opus 4.7) |
+| Métrica | Alvo (Claude Opus 4.7) |
 |---|---|
 | Tokens input por turn | <3000 (descontado system prompt) |
 | Tokens output por turn | 200-2000 (variavel) |
-| Cost por turn | <$0.05 chat normal, <$0.30 geracao longa |
+| Cost por turn | <$0.05 chat normal, <$0.30 geração longa |
 | First token latency | <2s |
 | Tokens/sec output | 30-80 (Anthropic streaming) |
-| Cost por usuario/mes | Estimar e definir alerta |
+| Cost por usuario/mês | Estimar e definir alerta |
 
 **Pattern: prompt caching (Anthropic):**
 ```ts
-// System prompt + facts grandes que nao mudam → cache
+// System prompt + facts grandes que não mudam → cache
 const response = await anthropic.messages.create({
   model: 'claude-opus-4-7',
   max_tokens: 1024,
   system: [
     { type: 'text', text: largeStaticInstructions, cache_control: { type: 'ephemeral' } },
-    { type: 'text', text: dynamicContext }, // nao cacheado
+    { type: 'text', text: dynamicContext }, // não cacheado
   ],
   messages,
 })
@@ -153,7 +158,7 @@ const response = await anthropic.messages.create({
 
 | Check | Como medir |
 |---|---|
-| Heap nao cresce indefinidamente | Heap snapshot via DevTools, Chrome Performance |
+| Heap não cresce indefinidamente | Heap snapshot via DevTools, Chrome Performance |
 | Sem leaks em listeners (cleanup em useEffect) | Inspecionar event listeners |
 | Cache com bound (Map sem limite vira leak) | Use LRU cache |
 | Streams fechadas | Reader released apos uso |
@@ -161,7 +166,7 @@ const response = await anthropic.messages.create({
 ### 8. Build performance
 
 - Hot reload <2s (Turbopack/Vite)
-- Cold build aceitavel (<60s pra projeto medio)
+- Cold build aceitável (<60s pra projeto medio)
 - CI build cache configurado
 - Type check incremental (tsc --build se monorepo)
 
@@ -219,11 +224,11 @@ Performance OK / OPTIMIZE [lista de areas]
 
 ## Regras
 
-- Mede antes de otimizar. Sem numeros, vira speculation.
-- Bottleneck e onde o numero esta fora do alvo, nao onde voce **acha** que esta.
-- Otimizacao prematura e bug. Mas falta de measurement tambem e bug.
-- LLM cost sem tracking = nao shippa em escala.
-- Bundle size 2x do alvo = bloqueio. User no 3G nao espera.
+- Mede antes de otimizar. Sem números, vira speculation.
+- Bottleneck e onde o número esta fora do alvo, não onde você **acha** que esta.
+- Otimização prematura é bug. Mas falta de measurement também é bug.
+- LLM cost sem tracking = não shippa em escala.
+- Bundle size 2x do alvo = bloqueio. User no 3G não espera.
 - Database sem indexes em queries quentes = bloqueio.
 - p99 latency >1s em endpoint user-facing = bloqueio.
 - Memory leak em background process = bloqueio (vai cair em horas/dias).

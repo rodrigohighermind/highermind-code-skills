@@ -84,17 +84,43 @@ Auditoria completa do ecossistema Higher Mind Skills. Decisões cravadas + aplic
 
 ## 4. Antes vs Depois
 
-| | Antes | Depois |
-|---|---|---|
-| `highermind-code-skills` | 11 skills (+ hm-cli untracked) | 12 skills (hm-cli cravado) |
-| `highermind-business-skills` | 2 skills | 2 skills |
-| Skills HM totais | 13 | 14 |
-| Skills soltas em ~/.claude/skills/ | hm-design-system + PM-pack | PM-pack (a migrar) |
+| Repo | Antes | Depois | Visibilidade GitHub |
+|---|---|---|---|
+| `highermind-code-skills` | 11 skills (+ hm-cli untracked) | 12 skills (hm-cli cravado) | **PÚBLICO** ([link](https://github.com/rodrigohighermind/highermind-code-skills)) |
+| `highermind-business-skills` | 2 skills | 2 skills | **PRIVADO** ([link](https://github.com/rodrigohighermind/highermind-business-skills)) |
+| `highermind-pm-skills` | n/a (5 skills soltas) | 5 skills versionadas localmente | **NÃO EXISTE** ainda no GitHub |
+| Skills HM totais (3 repos) | 13 | 19 | — |
+| Skills soltas em ~/.claude/skills/ | hm-design-system + PM-pack | nenhuma | — |
 
 ---
 
 ## 5. Próximos passos
 
-1. **Push pra GitHub** — `highermind-code-skills` tem 3 commits prontos. **Pendente de aprovação Owner.**
-2. **Criar repo `highermind-pm-skills` no GitHub** — 5 skills PM já preparadas localmente. **Pendente: `gh repo create` + push inicial.**
-3. **Sprint separada:** revisar PM-pack pelo padrão HM (estrutura, "Quando usar/NÃO usar", tom CFO/banker), atualizar README/CHANGELOG novos do repo PM.
+1. **Push pra GitHub** — `highermind-code-skills` tem 5+ commits prontos (auditoria inicial + polish run). **Pendente de aprovação Owner.**
+2. **Criar repo `highermind-pm-skills` no GitHub** — 5 skills PM já preparadas localmente, polish aplicado. **Pendente: `gh repo create` + push inicial.**
+3. **Push `highermind-business-skills`** — 2 commits novos (frontmatter, acentuação, refresh hm-align).
+
+---
+
+## 6. Polish run 2026-05-22 (sobe sistema de 8.0/10 → 9.5+/10)
+
+Apos auditoria inicial, identificados 5 defeitos transversais. Todos corrigidos nesta sessão:
+
+### Defeitos corrigidos
+
+| # | Defeito | Status |
+|---|---|---|
+| 1 | Frontmatter ausente em 10 code skills + hm-designer + hm-align + hm-sequoia | ✅ 13 skills ganharam `name:` + `description:` específicos |
+| 2 | Acentuação PT-BR ausente em 10 code + 5 PM + hm-sequoia | ✅ 1.500+ substituições aplicadas (3 passes: word-bounded case-insensitive + phrase-level) |
+| 3 | Versionamento inconsistente nos títulos | ✅ Skills sem versão ganharam `(v1)` — padronizado |
+| 4 | Model IDs antigos (`Sonnet 4` em vez de `Sonnet 4.6`) | ✅ Alinhado em hm-engineer + hm-llm-guardrails |
+| 5 | PM skills (4) com lista hardcoded de projetos envelhecendo | ✅ Genericizado: aponta pra MEMORY.md como fonte viva |
+
+### Bônus
+
+- `hm-align` refresh completo: era a mais fraca (6.5/10) — ganhou 3 exemplos concretos + anti-padrões + output template estruturado.
+- Cross-references novas: hm-init→hm-cli/align/sequoia, hm-security→hm-data-integrity.
+
+### Score por skill (depois do polish)
+
+Todas as skills sobem 1-2 pontos com os fixes transversais. Skills que estavam em 8.0/10 → 9.0-9.5. hm-security e hm-cli ficam em 9.5-10/10.

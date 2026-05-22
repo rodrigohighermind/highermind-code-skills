@@ -1,53 +1,62 @@
-# /hm-init — Inicio de Projeto (v3)
+---
+name: hm-init
+description: Início de projeto novo no padrão Higher Mind. Use quando vai iniciar um repositório do zero — escolhe a melhor stack, monta estrutura, infra local Docker-first, segurança day-1 (.dockerignore, multi-stage, non-root), Memory + CLAUDE.md cravados, configs obrigatórias por stack (Next.js, Supabase, Tailwind v4, Tauri/Electron). Para CLI especificamente, complementa com /hm-cli.
+---
 
-Voce esta agora em **modo init**. Um projeto novo esta comecando. Seu trabalho e garantir que ele nasca certo.
+# /hm-init — Início de Projeto (v3)
 
-## Principio central
+Você está agora em **modo init**. Um projeto novo esta comecando. Seu trabalho e garantir que ele nasca certo.
 
-O primeiro commit define o padrao. Um projeto world-class nao se torna world-class depois. Ele comeca world-class. **Seguranca nao e fase. E fundacao.**
+> **Antes de iniciar**, considere rodar `/hm-align` pra validar que isso é a coisa certa pra construir agora, e `/hm-sequoia` pra checar se aponta pro futuro (Autopilot/Outcome) e não pro passado (Copilot/Ferramenta). Init sem alinhamento gera código bonito que ninguém usa.
+>
+> **Se o projeto e CLI especificamente** (terminal app, ferramenta de linha de comando), use `/hm-cli` em vez desta — stack obrigatoria (Bun + Ink + bun:sqlite), filosofia agentic-first e patterns visuais cravados.
+
+## Princípio central
+
+O primeiro commit define o padrão. Um projeto world-class não se torna world-class depois. Ele comeca world-class. **Segurança não é fase. E fundacao.**
 
 ## Seu trabalho
 
-Quando o fundador descrever o que quer construir, voce:
+Quando o fundador descrever o que quer construir, você:
 
 ### 1. Avalia e escolhe a melhor stack
 
-Nao a popular. Nao a padrao. A melhor pra ESSE projeto especifico. Use o framework de decisao:
+Não a popular. Não a padrão. A melhor pra ESSE projeto especifico. Use o framework de decisão:
 
 | Criterio | Peso | Pergunta |
 |---|---|---|
-| **Fit pro problema** | CRITICO | Essa ferramenta resolve o core do problema melhor que as alternativas? |
+| **Fit pro problema** | CRÍTICO | Essa ferramenta resolve o core do problema melhor que as alternativas? |
 | **Performance** | ALTO | Latencia, throughput, cold starts — atende os requisitos do projeto? |
-| **Custo em producao** | ALTO | API calls, hosting, bandwidth — quanto custa rodar isso em escala? |
-| **Seguranca** | ALTO | Historico de CVEs, atualizacoes de seguranca, supply chain confiavel? |
+| **Custo em produção** | ALTO | API calls, hosting, bandwidth — quanto custa rodar isso em escala? |
+| **Segurança** | ALTO | Histórico de CVEs, atualizacoes de segurança, supply chain confiavel? |
 | **Maturidade** | MEDIO | Tem docs, comunidade, edge cases resolvidos? Ou e bleeding-edge com armadilhas? |
-| **Ecossistema** | MEDIO | Libs, integracoes, tooling — o ecossistema resolve ou voce vai ter que reinventar? |
-| **DX (Developer Experience)** | MEDIO | Velocidade de iteracao, debugging, deploy — o dia a dia e fluido? |
+| **Ecossistema** | MEDIO | Libs, integracoes, tooling — o ecossistema resolve ou você vai ter que reinventar? |
+| **DX (Developer Experience)** | MEDIO | Velocidade de iteração, debugging, deploy — o dia a dia e fluido? |
 | **Hiring pool** | BAIXO* | Se o projeto vai ter time, tem gente que sabe isso? |
 
 *Hiring pool e baixo porque projetos Higher Mind sao builder-first. Mas conta se vai escalar time.
 
-**Justifique cada escolha em uma frase.** Se duas opcoes sao proximas, explique por que uma vence.
+**Justifique cada escolha em uma frase.** Se duas opções sao próximas, explique por que uma vence.
 
 **Anti-patterns de escolha:**
-- "Todo mundo usa" nao e razao
-- "E o que eu conheco" nao e razao (a menos que o deadline justifique)
-- "Pode ser que a gente precise" nao e razao pra adicionar dependencia
+- "Todo mundo usa" não é razão
+- "E o que eu conheco" não é razão (a menos que o deadline justifique)
+- "Pode ser que a gente precise" não é razão pra adicionar dependência
 
 ### 2. Define a arquitetura como agent-first (quando aplicavel)
 
 Se o projeto tem componente de AI/agente:
 - **Agent-first**: o agente executa, a UI da visibilidade e override
-- **Chat-first**: a interface principal e conversa, nao formularios
+- **Chat-first**: a interface principal e conversa, não formularios
 - Antes de criar UI pra algo, pergunte: "O agente consegue fazer isso via conversa?"
-- Dashboards existem pra visibilidade, nao pra input principal
+- Dashboards existem pra visibilidade, não pra input principal
 
 Se o projeto e puramente frontend/ferramenta, ignore este passo.
 
 ### 3. Monta a estrutura
 
-- Estrutura de pastas que torna a arquitetura visivel
-- Boundaries entre modulos claros e respeitados
+- Estrutura de pastas que torna a arquitetura visível
+- Boundaries entre módulos claros e respeitados
 - Convencoes de naming consistentes
 - Um engenheiro senior entenderia o projeto em 10 minutos
 
@@ -61,18 +70,18 @@ Se o projeto e puramente frontend/ferramenta, ignore este passo.
 
 ### 5. Monta a infraestrutura local
 
-- **Docker Compose** como padrao pra local dev (banco, cache, servicos)
-- Ports documentados e nao conflitantes com outros projetos
+- **Docker Compose** como padrão pra local dev (banco, cache, servicos)
+- Ports documentados e não conflitantes com outros projetos
 - Volumes nomeados (dados sao sagrados — nunca perder dados)
 - Health checks nos servicos
 - Scripts de setup (um comando pra subir tudo)
-- Migrations automaticas no boot
+- Migrations automáticas no boot
 
-### 6. Seguranca desde o primeiro commit
+### 6. Segurança desde o primeiro commit
 
-**Esta secao e OBRIGATORIA. Nenhum projeto nasce sem isso.**
+**Esta seção e OBRIGATORIA. Nenhum projeto nasce sem isso.**
 
-#### .dockerignore (OBRIGATORIO em todo projeto com Docker)
+#### .dockerignore (OBRIGATÓRIO em todo projeto com Docker)
 Criar `.dockerignore` no root de CADA servico que tem Dockerfile:
 ```
 .git
@@ -96,15 +105,15 @@ LICENSE
 .DS_Store
 docker-compose*.yml
 ```
-**Se nao existe .dockerignore, o projeto nao esta pronto. Ponto.**
+**Se não existe .dockerignore, o projeto não está pronto. Ponto.**
 
-#### Dockerfiles production-ready (OBRIGATORIO)
+#### Dockerfiles production-ready (OBRIGATÓRIO)
 Todo Dockerfile DEVE:
 - Usar **multi-stage build** — stage de build separado do stage final
-- Stage final nao ter gcc, dev headers, ou ferramentas de compilacao
-- Rodar como **usuario nao-root** (`USER appuser`, nunca root)
+- Stage final não ter gcc, dev headers, ou ferramentas de compilacao
+- Rodar como **usuario não-root** (`USER appuser`, nunca root)
 - Ter `.dockerignore` correspondente
-- Copiar deps ANTES do codigo (cache de layers)
+- Copiar deps ANTES do código (cache de layers)
 - Nunca ter `--reload`, `npm run dev`, ou qualquer flag de desenvolvimento
 - Ter EXPOSE apenas das ports necessarias
 
@@ -145,7 +154,7 @@ EXPOSE 3000
 ENV PORT=3000 HOSTNAME="0.0.0.0"
 CMD ["node", "server.js"]
 ```
-**Requer** `output: 'standalone'` no `next.config.ts`. Sem isso, `.next/standalone` nao existe e o build falha.
+**Requer** `output: 'standalone'` no `next.config.ts`. Sem isso, `.next/standalone` não existe e o build falha.
 
 #### Entrypoints separados dev/prod
 - `entrypoint.sh` (prod): sem `--reload`, sem debug flags
@@ -155,61 +164,61 @@ CMD ["node", "server.js"]
 
 #### Secrets
 - Nenhum secret hardcoded em nenhum arquivo (nem "dev defaults" que parecem reais)
-- `.env` no `.gitignore` — verificar que esta la
+- `.env` no `.gitignore` — verificar que esta lá
 - `.env.example` com placeholders claros (`change-me-*`, `your-key-here`)
 - Nenhum secret no `docker-compose.yml` — tudo via `${VAR}` ou `env_file`
 - Nenhum secret em logs de build (build args sao vissiveis em `docker history`)
 
 #### Headers e CORS
 - Security headers configurados no backend desde o init
-- CORS configuravel via env var (nunca hardcoded, nunca `*` como default)
+- CORS configurável via env var (nunca hardcoded, nunca `*` como default)
 
-#### Dependencias
+#### Dependências
 - Rodar `npm audit` / `pip audit` no init
 - Zero vulnerabilidades conhecidas de severidade HIGH ou CRITICAL
 - Lock files commitados (package-lock.json, requirements.txt com hashes)
 
-### 7. Monta a fundacao de codigo
+### 7. Monta a fundacao de código
 
 - Auth (se o projeto precisa)
 - Schema do banco de dados com migrations
 - Estrutura de API (rotas, middleware, tratamento de erros)
 - Config de deploy (se o target e conhecido)
-- Health check endpoint que verifica dependencias (DB, Redis, etc — nao so retornar 200)
+- Health check endpoint que verifica dependências (DB, Redis, etc — não só retornar 200)
 
-### 8. Estabelece restricoes de custo
+### 8. Estabelece restrições de custo
 
 - Se usa APIs externas (LLM, etc): definir limites de contexto, evitar calls desnecessarias
-- Se tem background jobs: definir frequencia justificada
-- Documentar custo estimado por operacao principal
-- Custo x performance e restricao de design, nao otimizacao futura
+- Se tem background jobs: definir frequência justificada
+- Documentar custo estimado por operação principal
+- Custo x performance e restrição de design, não otimização futura
 
-### 9. Documenta as decisoes
+### 9. Documenta as decisões
 
 Crie ARCHITECTURE.md explicando:
 - Stack escolhida e por que (cada ferramenta)
-- Decisoes arquiteturais e trade-offs
+- Decisões arquiteturais e trade-offs
 - Como rodar o projeto
 - Ports e servicos
 - Estrutura de pastas
-- Decisoes de seguranca e por que
+- Decisões de segurança e por que
 
 ### 10. Memory + context-aware operation (HM-default)
 
 Todo projeto HM nasce com:
 
 #### `CLAUDE.md` por projeto
-- Raiz do repo. Contexto especifico do produto: stack, decisoes cravadas, modulos, glossario do dominio.
-- **Nao confundir** com o `CLAUDE.md` global (em `~/.claude/CLAUDE.md` ou equivalente), que define como o time opera de forma universal.
-- Endurecer baseline-ready se aplicavel (ex: cobertura minima, audit-rls obrigatorio em Supabase, perf budget). Nunca afrouxar.
+- Raiz do repo. Contexto especifico do produto: stack, decisões cravadas, módulos, glossario do DOMÍNIO.
+- **Não confundir** com o `CLAUDE.md` global (em `~/.claude/CLAUDE.md` ou equivalente), que define como o time opera de forma universal.
+- Endurecer baseline-ready se aplicavel (ex: cobertura mínima, audit-rls OBRIGATÓRIO em Supabase, perf budget). Nunca afrouxar.
 
 #### `MEMORY.md` + topic files
 - Raiz do repo. Resumo vivo do estado atual do projeto. **Limite: ~200 linhas.**
-- Acima de 200 linhas: mover detalhe pra `docs/topics/<assunto>.md` e manter so o ponteiro no MEMORY.md.
-- Auto-checkpoint: ao fechar bloco substancial (feature entregue, refactor grande, debug demorado), gravar no MEMORY.md ou topic file: licao aprendida, gotcha, decisao tomada, motivo.
-- PR aberta = estado "em revisao". Branch local = "trabalho em progresso". **Stash nao sobrevive** mais que algumas horas — nao usar pra estado importante.
+- Acima de 200 linhas: mover detalhe pra `docs/topics/<assunto>.md` e manter só o ponteiro no MEMORY.md.
+- Auto-checkpoint: ao fechar bloco substancial (feature entregue, refactor grande, debug demorado), gravar no MEMORY.md ou topic file: licao aprendida, gotcha, decisão tomada, motivo.
+- PR aberta = estado "em revisão". Branch local = "trabalho em progresso". **Stash não sobrevive** mais que algumas horas — não usar pra estado importante.
 
-### 11. Configuracoes obrigatorias por stack
+### 11. Configurações obrigatorias por stack
 
 #### Next.js (qualquer projeto Next 13+)
 - `devIndicators: false` no `next.config.ts` — o overlay de devtools polui design e atrapalha QA visual. Sempre desabilitar em projetos com bar de design alta.
@@ -226,53 +235,53 @@ export default {
 
 #### Projeto Supabase (qualquer projeto que use Supabase ou Postgres via PostgREST)
 - **`scripts/audit-rls.sh`** — escaneia migrations procurando `CREATE TABLE` em `public` sem `ENABLE ROW LEVEL SECURITY` + `CREATE POLICY` na mesma migration, e `CREATE VIEW` sem `WITH (security_invoker=true)`. Manter um projeto-template com esse script e copiar no setup.
-- **`scripts/git-hooks/pre-commit`** — Hook que roda `audit-rls.sh` antes de aceitar commit que toca `supabase/migrations/`.
-- Inscrever no email semanal do Supabase Security Advisor — tratar como ping de producao.
+- **`scripts/git-hooks/pré-commit`** — Hook que roda `audit-rls.sh` antes de aceitar commit que toca `supabase/migrations/`.
+- Inscrever no email semanal do Supabase Security Advisor — tratar como ping de produção.
 - Gate de fechamento de Sprint: `supabase db advisors --linked --level error` → esperar `No issues found`.
-- Ver `/hm-security` Dominio 14 pra regime completo (inclui esqueleto do `audit-rls.sh`).
+- Ver `/hm-security` DOMÍNIO 14 pra regime completo (inclui esqueleto do `audit-rls.sh`).
 
 #### Tailwind v4 + Turbopack
-- **Inline styles** pra design tokens (cores, spacing especifico, gradients). Tailwind v4/Turbopack nao resolve classes arbitrarias (`bg-[#3a7a8c]`, `gap-[14px]`) de forma confiavel.
+- **Inline styles** pra design tokens (cores, spacing especifico, gradients). Tailwind v4/Turbopack não resolve classes arbitrarias (`bg-[#3a7a8c]`, `gap-[14px]`) de forma confiavel.
 - Tailwind OK pra layout primitivos: `flex`, `grid`, `min-h-screen`, `items-center`, breakpoints.
-- HM Design System gera codigo com inline styles, NUNCA Tailwind classes pra tokens.
+- HM Design System gera código com inline styles, NUNCA Tailwind classes pra tokens.
 
 #### Tauri / Electron (app desktop com DB local)
-- DB em `userData` = **producao pessoal** desde o primeiro `npm run tauri build` que voce instala em `/Applications`.
-- Backup automatico no `before-quit` (snapshot SQLite/Postgres → repo privado ou storage local).
-- Reset de profile/facts/DB exige confirmacao explicita por operacao. Ver `/hm-data-integrity` v2.
+- DB em `userData` = **produção pessoal** desde o primeiro `npm run tauri build` que você instala em `/Applications`.
+- Backup automático no `before-quit` (snapshot SQLite/Postgres → repo privado ou storage local).
+- Reset de profile/facts/DB exige confirmacao explícita por operação. Ver `/hm-data-integrity` v2.
 
-## Padroes
+## Padrões
 
-- Toda dependencia precisa justificar sua existencia
-- A estrutura de pastas precisa tornar a arquitetura visivel
-- Sem codigo placeholder. Sem comentarios TODO no dia um. Tudo que existe funciona.
+- Toda dependência precisa justificar sua existência
+- A estrutura de pastas precisa tornar a arquitetura visível
+- Sem código placeholder. Sem comentarios TODO no dia um. Tudo que existe funciona.
 - O projeto precisa rodar com sucesso apos o init
 - Dados sao sagrados desde o primeiro docker-compose.yml
-- **Seguranca e fundacao, nao feature. Se falta .dockerignore, multi-stage build, ou non-root user, o init nao esta completo.**
+- **Segurança é fundação, não feature. Se falta .dockerignore, multi-stage build, ou non-root user, o init não esta completo.**
 
 ## Output
 
 Apos o init, o fundador deve conseguir:
-1. Entender cada escolha tecnica e o porque
+1. Entender cada escolha técnica e o porque
 2. Rodar o projeto com um comando
 3. Comecar a construir features sem friccao de setup
-4. Saber quanto vai custar rodar em producao
+4. Saber quanto vai custar rodar em produção
 5. **Ter certeza que o projeto e seguro desde o commit zero**
 6. Ter `CLAUDE.md` + `MEMORY.md` na raiz cravados, prontos pra acumular contexto
-7. Em Supabase: `audit-rls.sh` + pre-commit hook funcionando
+7. Em Supabase: `audit-rls.sh` + pré-commit hook funcionando
 8. Em Next.js: zero overlay devtools no canto da tela
 
 ## Regras
-- Nao pergunte "qual framework voce quer?" — recomende o melhor e explique por que
-- Nao faca scaffold de arquivos vazios. Todo arquivo que existe tem conteudo real.
-- Nao use pacotes deprecated ou sem manutencao
-- Nao configure o que ainda nao e necessario. Escopo pro que o projeto precisa agora.
+- Não pergunte "qual framework você quer?" — recomende o melhor e explique por que
+- Não faca scaffold de arquivos vazios. Todo arquivo que existe tem conteudo real.
+- Não use pacotes deprecated ou sem manutencao
+- Não configure o que ainda não é necessário. Escopo pro que o projeto precisa agora.
 - Se a descricao do fundador for vaga, faca UMA pergunta de esclarecimento antes de prosseguir
 - **Nunca exponha secrets ou ports desnecessarios**
 - **Nunca crie um projeto sem .dockerignore, multi-stage Dockerfile, e non-root user**
-- **Nunca use `npm run dev` ou `--reload` em Dockerfile de producao**
-- Se o projeto vai ter agente AI, arquitete agent-first desde o inicio — nao "adiciona agente depois"
-- **Apos o init, rodar `/hm-security` L1 pra validar que a fundacao de seguranca esta solida**
-- **Projeto Supabase sem `audit-rls.sh` + pre-commit hook NAO esta inicializado** — sem isso, regra de RLS so vive em disciplina, e disciplina falha
-- **Next.js com overlay de devtools visivel** = init incompleto. Sempre `devIndicators: false`
-- **CLAUDE.md + MEMORY.md ausentes na raiz** = init incompleto. Sem memoria viva, contexto se perde entre sessoes
+- **Nunca use `npm run dev` ou `--reload` em Dockerfile de produção**
+- Se o projeto vai ter agente AI, arquitete agent-first desde o inicio — não "adiciona agente depois"
+- **Apos o init, rodar `/hm-security` L1 pra validar que a fundacao de segurança está sólida**
+- **Projeto Supabase sem `audit-rls.sh` + pré-commit hook NÃO esta inicializado** — sem isso, regra de RLS só vive em disciplina, e disciplina falha
+- **Next.js com overlay de devtools visível** = init incompleto. Sempre `devIndicators: false`
+- **CLAUDE.md + MEMORY.md ausentes na raiz** = init incompleto. Sem memoria viva, contexto se perde entre sessões
