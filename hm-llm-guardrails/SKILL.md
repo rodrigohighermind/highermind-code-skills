@@ -238,7 +238,7 @@ for (const p of providers) {
 throw new Error('all providers failed')
 ```
 
-**Tradeoff:** complexidade vs disponibilidade. Vale pra apps com SLA externo. Pode usar Vercel AI Gateway pra abstracao.
+**Tradeoff:** complexidade vs disponibilidade. Vale pra apps com SLA externo. Pode usar Vercel AI Gateway ou [Bifrost](https://github.com/maximhq/bifrost) (open source, self-hosted, com fallback automático entre provedores) pra abstração.
 
 ### 12. Custo x performance e restrição de design (não otimização futura)
 
